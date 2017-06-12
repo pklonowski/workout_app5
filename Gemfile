@@ -35,6 +35,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootstrap-sass', '~>3.3.6'
 gem 'devise'
 gem 'jquery-ui-rails'
+gem 'd3-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
