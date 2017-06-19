@@ -4,6 +4,8 @@ RSpec.feature "Listing Exercise" do
   before do
     @john = User.create(first_name: "John", last_name: "Doe",
                         email: "john@test.com", password: "password")
+    @sarah = User.create(first_name: "Sarah", last_name: "Anderson",
+                        email: "sarah@test.com", password: "password")
     login_as(@john)
     
     @e1 = @john.exercises.create(duration_in_min: 28,
@@ -17,6 +19,9 @@ RSpec.feature "Listing Exercise" do
     @e3 = @john.exercises.create(duration_in_min: 35,
                                  workout: "Treadmill",
                                  workout_date: 8.days.ago)
+                                 
+    @following = Friendship.create(user: @john, friend: @sarah)
+
   end
 
   scenario "shows user's workout for last 7 days" do
@@ -45,5 +50,14 @@ RSpec.feature "Listing Exercise" do
     click_link "My Lounge"
     
     expect(page).to have_content("No Workouts Yet")
+  end
+  
+  scenario "shows a list of user's friends" do
+    visit "/"
+    
+    click_link "My Lounge"
+    expect(page).to have_content("My Friends")
+    expect(page).to have_link(@sarah.full_name)
+    expect(page).to have_link("Unfollow")
   end
 end
